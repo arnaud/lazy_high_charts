@@ -32,17 +32,13 @@ module LazyHighCharts
 
       graph =<<-EOJS
       <script type="text/javascript">
-      (function() {
-        var onload = window.onload;
-        window.onload = function(){
-          if (typeof onload == "function") onload();
-          var options, chart;
-          options = { #{options_collection.join(",")} };
-          #{capture(&block) if block_given?}
-          chart = new Highcharts.#{type}(options);
-          window.chart_#{object.options[:chart][:renderTo]} = chart;
-        };
-      })()
+      $(document).ready(function() {
+        var options, chart;
+        options = { #{options_collection.join(",")} };
+        #{capture(&block) if block_given?}
+        chart = new Highcharts.#{type}(options);
+        window.chart_#{object.options[:chart][:renderTo]} = chart;
+      });
       </script>
       EOJS
 
